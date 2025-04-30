@@ -1,0 +1,7 @@
+import pandas as pd
+df = pd.read_csv(r'E:\ASUS NOTEBOOK\Tanulás\PyCharm_gyak_2025\data_01.csv')
+
+# 1) Print the names of players with a score over 85
+for index, row in df.iterrows():
+    if row['Score'] > 85:
+        print(row['Name'])
