@@ -1,0 +1,45 @@
+import csv
+from datetime import date
+
+expenses = {}
+total = 0
+exp_cost = 0
+
+print('Welcome to your expense tracker! 🎯​​')
+
+# Asking user for input into expense tracker until they have anything to add
+
+yn = input('Would you like to add an expense? (Yes/No) ')
+
+while True:
+    if yn.upper() == 'NO' or yn.upper() == 'N':
+        break
+    elif yn.upper() == 'YES' or yn.upper() == 'Y':
+        exp_name = input('Expense name: ').strip()
+        try:
+            exp_cost = float(input('Expense cost: '))
+        except ValueError:
+            print("❌ That was not a valid number. Try again.")
+        expenses[exp_name] = exp_cost
+        total += exp_cost
+        print('✅ Added! ' + exp_name + ' - ' + str(exp_cost))
+        yn = input('Would you like to add another expense? (Yes/No) ')
+    else:
+        print("⚠️  Please answer with 'Yes' or 'No'.")
+        yn = input('Would you like to add another expense? (Yes/No) ')
+
+expenses['Total'] = total
+
+# Creating a csv file with the expense details
+today_str = date.today().strftime("%Y-%m-%d")
+file_name = r'L:\Egyéb\Python_fajlok\Expenses_' + today_str + '.csv'
+with open(file_name, mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Expense','Amount'])
+    for exp_name, exp_cost in expenses.items():
+        writer.writerow([exp_name, exp_cost])
+
+print(f'Your expenses have been saved to this file: {file_name}!')
+print('Your expenses:')
+for exp_name, exp_cost in expenses.items():
+    print(exp_name,'-',exp_cost)
